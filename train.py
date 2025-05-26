@@ -30,8 +30,7 @@ def eval_metrics(actual, pred):
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
 
-
-if __name__ == "__main__":
+def train():
     df = pd.read_csv("./df_clear.csv", delimiter = ',')
     X,Y, power_trans = scale_frame(df)
     X_train, X_val, y_train, y_val = train_test_split(X, Y,
