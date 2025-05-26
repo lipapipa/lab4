@@ -59,10 +59,7 @@ def clear_data():
 dag = DAG(
     dag_id="train_pipe1",
     start_date=datetime(2025, 2, 3),
-    concurrency=4,
-    schedule_interval=timedelta(minutes=5),
-   schedule="@hourly",
-    max_active_runs=1,
+    schedule=timedelta(minutes=5),  
     catchup=False,
 )
 download_task = PythonOperator(python_callable=download_data, task_id = "download", dag = dag)
