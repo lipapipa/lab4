@@ -56,16 +56,16 @@ def clear_data():
     df.to_csv('df_clear.csv')
     return True
 
-dag_cars = DAG(
-    dag_id="train_pipe",
+dag = DAG(
+    dag_id="train_pipe1",
     start_date=datetime(2025, 2, 3),
     concurrency=4,
     schedule_interval=timedelta(minutes=5),
-#    schedule="@hourly",
+   schedule="@hourly",
     max_active_runs=1,
     catchup=False,
 )
-download_task = PythonOperator(python_callable=download_data, task_id = "download_cars", dag = dag_cars)
-clear_task = PythonOperator(python_callable=clear_data, task_id = "clear_cars", dag = dag_cars)
-train_task = PythonOperator(python_callable=train, task_id = "train_cars", dag = dag_cars)
+download_task = PythonOperator(python_callable=download_data, task_id = "download", dag = dag)
+clear_task = PythonOperator(python_callable=clear_data, task_id = "clear", dag = dag)
+train_task = PythonOperator(python_callable=train, task_id = "train", dag = dag)
 download_task >> clear_task >> train_task
